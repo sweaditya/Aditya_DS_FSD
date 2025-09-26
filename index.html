@@ -1,12 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Student Marks Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f7f7f7;
+    }
+    h2 {
+      text-align: center;
+      font-size: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 450px;   /* Chhota size */
+      margin: auto;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0px 3px 8px rgba(0,0,0,0.15);
+    }
+    input {
+      padding: 6px;
+      margin: 4px;
+      font-size: 14px;
+      width: 45%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 6px 10px;
+      margin: 4px;
+      font-size: 13px;
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    table {
+      width: 100%;
+      margin-top: 15px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 6px;
+    }
+    th {
+      background: #007bff;
+      color: white;
+    }
+    .average-box {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 14px;
+      color: green;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello World</h1>
-    
+  <div class="container">
+    <h2>Student Marks Manager</h2>
+    <input type="text" id="name" placeholder="Student Name">
+    <input type="number" id="marks" placeholder="Marks">
+    <br>
+    <button onclick="addStudent()">Add Student</button>
+    <button onclick="showAll()">Show All</button>
+    <button onclick="showPassed()">Show Passed</button>
+    <button onclick="calculateAverage()">Average</button>
+
+    <table id="studentTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Marks</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="average" class="average-box"></div>
+  </div>
+
+  <script>
+    let students = [];
+
+    function addStudent() {
+      const name = document.getElementById("name").value.trim();
+      const marks = parseInt(document.getElementById("marks").value);
+
+      if (name && !isNaN(marks)) {
+        students.push({ name, marks });
+        alert("Student Added!");
+        document.getElementById("name").value = "";
+        document.getElementById("marks").value = "";
+      } else {
+        alert("Please enter valid details.");
+      }
+    }
+
+    function renderTable(data) {
+      const tbody = document.querySelector("#studentTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(s => {
+        const row = `<tr><td>${s.name}</td><td>${s.marks}</td></tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    function showAll() {
+      renderTable(students);
+      document.getElementById("average").innerHTML = "";
+    }
+
+    function showPassed() {
+      const passed = students.filter(s => s.marks >= 40);
+      renderTable(passed);
+      document.getElementById("average").innerHTML = "";
+    }
+
+    function calculateAverage() {
+      if (students.length === 0) {
+        alert("No students available.");
+        return;
+      }
+      const total = students.reduce((sum, s) => sum + s.marks, 0);
+      const avg = (total / students.length).toFixed(2);
+      document.getElementById("average").innerHTML = "Average Marks: " + avg;
+    }
+  </script>
 </body>
 </html>
