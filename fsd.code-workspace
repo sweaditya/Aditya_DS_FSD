@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "D:/cohort"
+		},
+		{
+			"path": "D:/My Project 1"
+		},
+		{
+			"path": "D:/cohort 2"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "cohort"
+	}
+}
